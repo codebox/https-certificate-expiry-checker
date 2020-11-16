@@ -14,6 +14,7 @@ WARN_IF_DAYS_LESS_THAN = 7
 EXIT_SUCCESS = 0
 EXIT_EXPIRING_SOON = 1
 EXIT_ERROR = 2
+EXIT_NO_HOST_LIST = 9
 
 def make_host_port_pair(endpoint):
     host, _, specified_port = endpoint.partition(':')
@@ -113,5 +114,5 @@ if __name__ == '__main__':
         check_certificates(endpoints)
     else:
         print('Usage: {} <list of endpoints>'.format(sys.argv[0]))
-
+        sys.exit(EXIT_NO_HOST_LIST)
 
