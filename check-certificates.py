@@ -69,7 +69,7 @@ def get_exit_code(err_count, min_days):
     return code
 
 def format_host_port(host, port):
-    return '{}:{}'.format(host, port)
+    return host + ('' if port == DEFAULT_HTTPS_PORT else ':{}'.format(port))
 
 def check_certificates(endpoints):
     context = ssl.create_default_context()
