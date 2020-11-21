@@ -77,8 +77,8 @@ def check_certificates(endpoints):
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=WORKER_THREAD_COUNT) as executor:
         futures = {
-            executor.submit(get_certificate_expiry_date_time, context, host, port): (host, port)
-            for host, port in host_port_pairs
+            executor.submit(get_certificate_expiry_date_time, context, host, port):
+            (host, port) for host, port in host_port_pairs
         }
 
         endpoint_count = len(endpoints)
