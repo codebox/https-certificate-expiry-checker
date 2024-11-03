@@ -31,8 +31,7 @@ def get_certificate_expiry_date_time(context, host, port):
             # certificate_info is a dict with lots of information about the certificate
             certificate_info = ssl_socket.getpeercert()
             exp_date_text = certificate_info['notAfter']
-            # date format is like 'Sep  9 12:00:00 2016 GMT'
-            return datetime.datetime.strptime(exp_date_text, r'%b %d %H:%M:%S %Y %Z')
+            return datetime.datetime.fromtimestamp(ssl.cert_time_to_seconds(exp_date_text), datetime.timezone.utc)
 
 
 def format_time_remaining(time_remaining):
@@ -94,7 +93,7 @@ def check_certificates(endpoints):
                 err_count += 1
                 print('{} ERROR {}'.format(format_host_port(host, port).ljust(max_host_port_len), ex))
             else:
-                time_remaining = expiry_time - datetime.datetime.utcnow()
+                time_remaining = expiry_time - datetime.datetime.now(datetime.timezone.utc)
                 time_remaining_txt = format_time_remaining(time_remaining)
                 days_remaining = time_remaining.days
                 min_days = min(min_days, days_remaining)
